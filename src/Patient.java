@@ -9,7 +9,7 @@ public class Patient extends JFrame {
     private String Wohnadresse;
     private String Vorname;
     private String Nachname;
-
+    private char Geschlecht;
 
 
 
@@ -60,5 +60,13 @@ public class Patient extends JFrame {
 
     public void setNachname(String nachname) {
         Nachname = nachname;
+    }
+
+    public char getGeschlecht() {
+        return Geschlecht;
+    }
+
+    public void setGeschlecht(char geschlecht) {
+        Geschlecht = geschlecht;
     }
 }

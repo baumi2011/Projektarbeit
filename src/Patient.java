@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+
+
+
 public class Patient extends JFrame {
 
     private int IDPatient;

@@ -8,11 +8,23 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) {
+boolean login = false;
+        while(!login) {
+            SwingUtilities.invokeLater(() -> {
+                Login GUI = new Login();
+                GUI.setVisible(true);
+            });
 
-    SwingUtilities.invokeLater(() -> {
-        Patient GUI = new Patient();
-        GUI.setVisible(true);
-    });
+        }
+
+
+        SwingUtilities.invokeLater(() -> {
+            Patient GUI = new Patient();
+            GUI.setVisible(true);
+        });
+
+
+
     }
 
 

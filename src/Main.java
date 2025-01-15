@@ -10,20 +10,22 @@ public class Main {
     public static void main(String[] args) {
         Login LoginGUI = new Login();
         Patient PatientGUI = new Patient();
+        boolean Status = false;
 
-
-        do {
+        if (!LoginGUI.LoginFunktion(Status)) {
             SwingUtilities.invokeLater(() -> {
 
                 LoginGUI.setVisible(true);
             });
 
-        }while (!LoginGUI.LoginFunktion());
+        } else {
+
+            SwingUtilities.invokeLater(() -> {
+                PatientGUI.setVisible(true);
+            });
+        }
 
 
     }
-
-
-
 
     }

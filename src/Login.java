@@ -21,14 +21,13 @@ public class Login extends JFrame {
 
    }
 
-   public boolean LoginFunktion(){
+   public boolean LoginFunktion(boolean Status){
 
        loginButton.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
             if(BenutzerFeld.getText().equals(BenutzerName) && PasswortFeld.getText().equals(Passwort)){
 
                 dispose();
-
 
 
             }else{
@@ -39,7 +38,7 @@ public class Login extends JFrame {
            }
 
        });
-    return true;
+    return Status;
    }
 
 

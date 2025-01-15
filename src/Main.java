@@ -8,21 +8,17 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) {
-boolean login = false;
-        while(!login) {
+        Login LoginGUI = new Login();
+        Patient PatientGUI = new Patient();
+
+
+        do {
             SwingUtilities.invokeLater(() -> {
-                Login GUI = new Login();
-                GUI.setVisible(true);
+
+                LoginGUI.setVisible(true);
             });
 
-        }
-
-
-        SwingUtilities.invokeLater(() -> {
-            Patient GUI = new Patient();
-            GUI.setVisible(true);
-        });
-
+        }while (!LoginGUI.LoginFunktion());
 
 
     }

@@ -1,20 +1,45 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Login extends JFrame {
 
     private JPanel panel1;
     private JPanel Benutzer;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField BenutzerFeld;
     private JButton loginButton;
-    private JTextArea textArea1;
+    private JTextArea AusgabeFeld;
+    private JPasswordField PasswortFeld;
     private JTextField Benutzername;
+    private final String  BenutzerName = "root";
+    private final String Passwort = "1234";
 
    Login(){
        setTitle("Login");
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        setContentPane(panel1);
 
+   }
+
+   public boolean LoginFunktion(){
+
+       loginButton.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+            if(BenutzerFeld.getText().equals(BenutzerName) && PasswortFeld.getText().equals(Passwort)){
+
+                dispose();
+
+
+
+            }else{
+                AusgabeFeld.setText("Falsche Eingabe!");
+
+            }
+
+           }
+
+       });
+    return true;
    }
 
 

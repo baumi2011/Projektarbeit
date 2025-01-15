@@ -8,24 +8,10 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) {
-        Login LoginGUI = new Login();
-        Patient PatientGUI = new Patient();
-        boolean Status = false;
 
-        if (!LoginGUI.LoginFunktion(Status)) {
-            SwingUtilities.invokeLater(() -> {
+        new Login();
 
-                LoginGUI.setVisible(true);
-            });
-
-        } else {
-
-            SwingUtilities.invokeLater(() -> {
-                PatientGUI.setVisible(true);
-            });
         }
 
-
-    }
 
     }

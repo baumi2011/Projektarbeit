@@ -30,7 +30,7 @@ public class Patient extends JFrame {
         setContentPane(JPanel1);
         Menubar();
         pack();
-
+        setVisible(true);
     }
 
     private void Menubar(){

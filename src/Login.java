@@ -41,4 +41,11 @@ public class Login extends JFrame {
 
 
     }
+    public void datenEinfügen(){
+
+
+
+    }
+
+
 }

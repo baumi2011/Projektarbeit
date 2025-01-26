@@ -14,9 +14,9 @@ public class PatientDatabase {
 
 
     // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "Jan_hesch501";
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
+    public static final String DB_USER = "root";
+    public static final String DB_PASSWORD = "Jan_hesch501";
 
     public static void patientenDaten(){
 
@@ -27,7 +27,7 @@ public class PatientDatabase {
 
         // Layout festlegen
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 2));
+        panel.setLayout(new GridLayout(6, 2));
 
         // GUI-Komponenten erstellen
         JLabel idLabel = new JLabel("ID");
@@ -46,7 +46,7 @@ public class PatientDatabase {
         JTextField geschlechtField = new JTextField();
 
         JLabel svnLabel = new JLabel("SVN Nummer:");
-        JTextField svnField = new JTextField();
+        JTextField svnField = new JTextField(10);
 
         JLabel gebLabel = new JLabel("Geburtsdatum:");
         JTextField gebField = new JTextField();
@@ -58,6 +58,8 @@ public class PatientDatabase {
         JTextField phoneField = new JTextField();
 
         JButton submitButton = new JButton("Hinzufügen");
+
+        JButton exitButton = new JButton("Abbrechen");
 
         // Komponenten zum Panel hinzufügen
         panel.add(idLabel);
@@ -80,8 +82,14 @@ public class PatientDatabase {
         panel.add(phoneField);
         panel.add(new JLabel()); // Platzhalter
         panel.add(submitButton);
+        panel.add(exitButton);
 
-
+        // Button-ActionListener exit
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
 
         // Button-ActionListener hinzufügen
         submitButton.addActionListener(new ActionListener() {
@@ -127,9 +135,9 @@ public class PatientDatabase {
                     return;
                 }
                 try {
-                    LocalDate.parse(Geburtsdatum, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                    LocalDate.parse(Geburtsdatum);
                 } catch (DateTimeParseException ex) {
-                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'dd.MM.yyyy' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'yy-mm-dd' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (Adresse.isEmpty()) {
@@ -186,6 +194,11 @@ public class PatientDatabase {
             JOptionPane.showMessageDialog(null, "Daten konnten nicht hinzugefügt werden. Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
+
+
+
 }
 
 

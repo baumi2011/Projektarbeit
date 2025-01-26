@@ -15,6 +15,8 @@ import java.util.Date;
 
 public class Patient extends JFrame {
         private PatientDatabase patientDatabase;
+        private PatientBearbeitung patientBearbeitung;
+        private PatientLöschen patientLöschen;
 
 
         private int IDPatient;
@@ -49,15 +51,39 @@ public class Patient extends JFrame {
             JMenuItem hinzufügenButtonItem = new JMenuItem("Hinzufügen");
             menubar.add(hinzufügenButtonItem);
 
-            //Hinzufügen Methode mit Aufruf der einzelnen Attribute
+            //Bearbeiten an der Menüleiste hinzufügen
+            JMenuItem bearbeitenButtonItem = new JMenuItem("Bearbeiten");
+            menubar.add(bearbeitenButtonItem);
+
+            //Löschen an der Menüleiste hinzufügen
+            JMenuItem löschenButtonItem = new JMenuItem("Löschen");
+            menubar.add(löschenButtonItem);
+
+            //LöschenButton Listener hinzufügen mit aufruf der GUI und der Methoden zum Löschen
+            löschenButtonItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    patientLöschen = new PatientLöschen();
+                    PatientLöschen.patientLöschen();
+
+                }
+            });
+
+            //BearbeitenButton hinzufügen mit aufruf der GUI und der Methoden zur bearbeitung
+            bearbeitenButtonItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    patientBearbeitung = new PatientBearbeitung();
+                    PatientBearbeitung.patientenBearbeitenGUI();
+                }
+            });
+
+
+            //HinzufügenButton hinzufügen mit aufruf der GUI und der Methoden zum hinzufügen eines neuen Patienten
             hinzufügenButtonItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     patientDatabase = new PatientDatabase();
                     PatientDatabase.patientenDaten();
                 }
             });
-
-
 
 
 

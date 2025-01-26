@@ -2,6 +2,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Die Klasse Login implementiert ein GUI-basiertes Login-Fenster für die Benutzeranmeldung.
+ * <p>
+ * - Initialisierung des Login-Fensters.
+ * <p>
+ * - Überprüfung der Benutzerdaten (Benutzername und Passwort).
+ * <p>
+ * - Ausgabe von Fehlermeldungen bei falschen Eingaben.
+ * <p>
+ * - Weiterleitung zu einer neuen Instanz der Klasse {@link Patient}, wenn die Anmeldedaten korrekt sind.
+ */
 public class Login extends JFrame {
 
     private JPanel panel1;
@@ -14,6 +25,11 @@ public class Login extends JFrame {
     private final String BenutzerName = "root";
     private final String Passwort = "1234";
 
+    /**
+     * Konstuktor für die Login Klasse
+     * <p>
+     *  Initialisiert das Login-Fenster, macht es sichtbar und ruft die LoginFunktion Methode auf.
+     */
     Login() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,6 +39,15 @@ public class Login extends JFrame {
 
     }
 
+    /**
+     * Die Methode LoginFunktion implementiert die Funktionalität eines Login-Buttons.
+     * <p>
+     * Sie überprüft, ob die vom Benutzer eingegebenen Anmeldedaten korrekt sind.
+     * <p>
+     * Wenn Ja wird sie beendet und Die PatientenGUI wird aufgerufen.
+     * <p>
+     * Wenn Nein, wird der Nutzer über die Falsche Eingabe informiert.
+     */
     public void LoginFunktion() {
 
         loginButton.addActionListener(new ActionListener() {

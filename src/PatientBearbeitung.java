@@ -4,6 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Die Klasse PatientBearbeitung bietet Funktionalitäten zur Bearbeitung von Patientendaten
+ * in einer MySQL-Datenbank über eine grafische Benutzeroberfläche (GUI).
+ * <p>
+ * Sie ermöglicht das Abrufen und Aktualisieren von Patientendaten basierend auf der eingegebenen Patienten-ID.
+ */
 public class PatientBearbeitung {
 
     // JDBC-Verbindungsdetails
@@ -11,6 +17,18 @@ public class PatientBearbeitung {
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "Jan_hesch501";
 
+/**
+ * Zeigt eine grafische Benutzeroberfläche (GUI) zur Bearbeitung von Patientendaten an.
+ * <p>
+ * Funktionen:
+ * <ul>
+ * <li>Benutzer kann die ID eines Patienten eingeben und dessen Daten abrufen.</li>
+ * <li>Benutzer kann die Patientendaten bearbeiten und die Änderungen in der Datenbank speichern.</li>
+ * <li>Ein "Abbrechen"-Button schließt die Anwendung.</li>
+ * </ul>
+ * <p>
+ * Die GUI überprüft die Eingaben auf Fehler und zeigt entsprechende Fehlermeldungen an.
+ */
 
     public static void patientenBearbeitenGUI() {
         // Erstellen des Hauptfensters

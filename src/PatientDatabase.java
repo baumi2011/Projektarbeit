@@ -10,6 +10,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
+/**
+ * Die Klasse PatientDatabase implementiert eine GUI-Anwendung zur Verwaltung von Patientendaten und deren Speicherung in einer MySQL-Datenbank.
+ * <p>
+ * Sie enthält Methoden zur Darstellung einer grafischen Oberfläche, zur Validierung der Benutzereingaben
+ * sowie zum Einfügen der Patientendaten in die Datenbank.
+ */
 public class PatientDatabase {
 
 
@@ -18,6 +25,14 @@ public class PatientDatabase {
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "Jan_hesch501";
 
+
+    /**
+     * Erstellt ein GUI-Fenster zur Eingabe und Validierung von Patientendaten.
+     * <p>
+     * Diese Methode erstellt ein grafisches Interface, in dem Benutzer Patientendaten eingeben können.
+     * <p>
+     * Die eingegebenen Daten werden auf Validität überprüft und danach in die Datenbank gespeichert.
+     */
     public static void patientenDaten(){
 
         // Erstellen des Fensters
@@ -163,6 +178,23 @@ public class PatientDatabase {
         frame.setVisible(true);
     }
 
+
+    /**
+     * Fügt Patientendaten in die MySQL-Datenbank ein.
+     * <p>
+     * Diese Methode führt eine SQL-INSERT-Anweisung aus, um die übergebenen Patientendaten
+     * in die Tabelle "patients" der MySQL-Datenbank einzufügen.
+     *
+     * @param id            Eindeutige ID des Patienten.
+     * @param Vorname       Vorname des Patienten.
+     * @param Nachname      Nachname des Patienten.
+     * @param Alter         Alter des Patienten (muss zwischen 1 und 120 liegen).
+     * @param Geschlecht    Geschlecht des Patienten ("männlich", "weiblich", "divers").
+     * @param svnNummer     Sozialversicherungsnummer des Patienten (10 Ziffern).
+     * @param geburtsdatum  Geburtsdatum des Patienten (Format: yyyy-MM-dd).
+     * @param adresse       Adresse des Patienten.
+     * @param telefonnummer Telefonnummer des Patienten
+     */
     static void insertPatientData(int id, String Vorname, String Nachname, int Alter, String Geschlecht, String svnNummer, String geburtsdatum, String adresse, String telefonnummer) {
         // SQL-Statement zum Einfügen von Daten
         String sql = "INSERT INTO patients (`ID Patient`, Vorname, Nachname,`Alter`, Geschlecht, `SVN Nummer`, Geburtsdatum, Adresse, Telefonnummer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

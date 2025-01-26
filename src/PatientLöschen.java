@@ -8,7 +8,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
+/**
+ * Die Klasse PatientLöschen bietet Funktionalität zum Löschen von Patientendaten aus einer MySQL-Datenbank.
+ * <p>
+ * Die Klasse enthält Methoden zur Anzeige einer grafischen Benutzeroberfläche (GUI),
+ * mit der der Benutzer die ID eines Patienten eingeben kann, sowie eine Methode zum
+ * tatsächlichen Löschen des Datensatzes in der Datenbank.
+ */
 public class PatientLöschen {
 
 
@@ -18,7 +24,13 @@ public class PatientLöschen {
         public static final String DB_USER = "root";
         public static final String DB_PASSWORD = "Jan_hesch501";
 
-        public static void patientLöschen() {
+    /**
+     * Zeigt eine grafische Benutzeroberfläche (GUI) an, mit der ein Patient durch Eingabe seiner ID gelöscht werden kann.
+     * <p>
+     * Die Methode erstellt ein Fenster, in dem der Benutzer die ID eines Patienten eingeben und die Löschung bestätigen kann.
+     * Es wird überprüft, ob die ID gültig ist, und die Methode {@link #löschePatientMitId(int)} wird aufgerufen, um die Löschung durchzuführen.
+     */
+    public static void patientLöschen() {
             // Erstellen des Fensters
             JFrame frame = new JFrame("Patient löschen");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,6 +100,15 @@ public class PatientLöschen {
         }
 
         // Methode zum Löschen eines Patienten aus der Datenbank
+
+    /**
+     * Löscht einen Patienten aus der Datenbank basierend auf der angegebenen ID.
+     * <p>
+     * Diese Methode führt eine SQL-DELETE-Anweisung aus, um den Datensatz mit der angegebenen ID aus der Tabelle "patients" zu löschen.
+     * <p>
+     * @param id Die eindeutige ID des zu löschenden Patienten.
+     * @return {@code true}, wenn der Patient erfolgreich gelöscht wurde, andernfalls {@code false}.
+     */
         public static boolean löschePatientMitId(int id) {
             String sql = "DELETE FROM patients WHERE `ID Patient` = ?";
 

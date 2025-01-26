@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.util.Date;
 
 
-
+/**
+ * Die Klasse Patient stellt eine grafische Benutzeroberfläche (GUI) bereit,
+ * mit der Patientendaten verwaltet werden können.
+ * Sie erlaubt das Hinzufügen, Bearbeiten, Löschen, Drucken und Exportieren von Patientendaten.
+ */
 
 public class Patient extends JFrame {
         private PatientDatabase patientDatabase;
@@ -28,6 +32,11 @@ public class Patient extends JFrame {
         private char Geschlecht;
         private JPanel JPanel1;
 
+    /**
+     * Konstruktor für die Patient-Klasse.
+     * Initialisiert das Hauptfenster der Anwendung, setzt den Titel und fügt die Menüleiste hinzu.
+     */
+
         Patient() {
             setTitle("Patient");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,6 +45,19 @@ public class Patient extends JFrame {
             pack();
             setVisible(true);
         }
+
+    /**
+     * Erstellt und konfiguriert die Menüleiste der Anwendung.
+     * Die Menüleiste enthält folgende Optionen:
+     * <ul>
+     *   <li>Hinzufügen von neuen Patienten</li>
+     *   <li>Bearbeiten von Patientendaten</li>
+     *   <li>Löschen von Patienten</li>
+     *   <li>Drucken von Inhalten</li>
+     *   <li>Exportieren von Daten</li>
+     *   <li>Beenden der Anwendung</li>
+     * </ul>
+     */
 
         private void Menubar() {
             JMenuBar menubar = new JMenuBar();

@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Die Klasse PatientBearbeitung bietet Funktionalitäten zur Bearbeitung von Patientendaten
@@ -17,23 +19,22 @@ public class PatientBearbeitung {
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "Jan_hesch501";
 
-/**
- * Zeigt eine grafische Benutzeroberfläche (GUI) zur Bearbeitung von Patientendaten an.
- * <p>
- * Funktionen:
- * <ul>
- * <li>Benutzer kann die ID eines Patienten eingeben und dessen Daten abrufen.</li>
- * <li>Benutzer kann die Patientendaten bearbeiten und die Änderungen in der Datenbank speichern.</li>
- * <li>Ein "Abbrechen"-Button schließt die Anwendung.</li>
- * </ul>
- * <p>
- * Die GUI überprüft die Eingaben auf Fehler und zeigt entsprechende Fehlermeldungen an.
- */
-
+    /**
+     * Zeigt eine grafische Benutzeroberfläche (GUI) zur Bearbeitung von Patientendaten an.
+     * <p>
+     * Funktionen:
+     * <ul>
+     * <li>Benutzer kann die ID eines Patienten eingeben und dessen Daten abrufen.</li>
+     * <li>Benutzer kann die Patientendaten bearbeiten und die Änderungen in der Datenbank speichern.</li>
+     * <li>Ein "Abbrechen"-Button schließt die Anwendung.</li>
+     * </ul>
+     * <p>
+     * Die GUI überprüft die Eingaben auf Fehler und zeigt entsprechende Fehlermeldungen an.
+     */
     public static void patientenBearbeitenGUI() {
         // Erstellen des Hauptfensters
         JFrame frame = new JFrame("Patientendaten bearbeiten");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 500);
 
         // Layout und Komponenten
@@ -80,13 +81,19 @@ public class PatientBearbeitung {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id;
-                try {
-                    id = Integer.parseInt(idField.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige ID ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                String idText = idField.getText();
+
+                // Verwenden von RegEx, um sicherzustellen, dass die ID nur Zahlen enthält
+                String idPattern = "^[0-9]+$"; // Nur Zahlen
+                Pattern pattern = Pattern.compile(idPattern);
+                Matcher matcher = pattern.matcher(idText);
+
+                if (!matcher.matches()) {
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige numerische ID ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                int id = Integer.parseInt(idText);
 
                 // Patientendaten abrufen
                 try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
@@ -116,11 +123,10 @@ public class PatientBearbeitung {
         });
 
         exitButton.addActionListener(new ActionListener() {
-public void actionPerformed(ActionEvent e) {
-    frame.dispose();
-}
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
         });
-
 
         // ActionListener für den "Aktualisieren"-Button
         updateButton.addActionListener(new ActionListener() {

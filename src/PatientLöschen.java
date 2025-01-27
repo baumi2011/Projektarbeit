@@ -33,7 +33,7 @@ public class PatientLöschen {
     public static void patientLöschen() {
             // Erstellen des Fensters
             JFrame frame = new JFrame("Patient löschen");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setSize(300, 200);
 
             // Layout festlegen

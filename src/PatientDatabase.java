@@ -37,7 +37,7 @@ public class PatientDatabase {
 
         // Erstellen des Fensters
         JFrame frame = new JFrame("Patientendatenbank");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 300);
 
         // Layout festlegen

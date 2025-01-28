@@ -26,6 +26,7 @@ public class PatientLöschen {
      * Zeigt eine grafische Benutzeroberfläche (GUI) an, mit der ein Patient durch Eingabe seiner ID gelöscht werden kann.
      * <p>
      * Die Methode erstellt ein Fenster, in dem der Benutzer die ID eines Patienten eingeben und die Löschung bestätigen kann.
+     * <p>
      * Es wird überprüft, ob die ID gültig ist, und die Methode {@link #löschePatientMitId(int)} wird aufgerufen, um die Löschung durchzuführen.
      */
     public static void patientLöschen() {

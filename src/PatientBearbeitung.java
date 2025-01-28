@@ -145,7 +145,7 @@ public class PatientBearbeitung {
                     return;
                 }
 
-                // Die ID darf nicht verändert werden
+
                 String vorname = nameField.getText();
                 String nachname = nachnameField.getText();
                 String alterStr = ageField.getText();
@@ -160,6 +160,8 @@ public class PatientBearbeitung {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Vorname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Nachname überprüfen
                 if (nachname.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Nachname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -171,6 +173,7 @@ public class PatientBearbeitung {
                     return;
                 }
 
+                //ALter überprüfen
                 try {
                     int alter = Integer.parseInt(alterStr);
                     if (alter < 0 || alter > 120) {
@@ -208,6 +211,7 @@ public class PatientBearbeitung {
                     return;
                 }
 
+                //Adresse überprüfen
                 if (addressField.getText().isEmpty()){
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Adresse' darf nicht leer sein." , "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;

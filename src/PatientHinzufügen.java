@@ -23,8 +23,6 @@ public class PatientHinzufügen {
 
 
     /**
-     * Erstellt ein GUI-Fenster zur Eingabe und Validierung von Patientendaten.
-     * <p>
      * Diese Methode erstellt ein grafisches Interface, in dem Benutzer Patientendaten eingeben können.
      * <p>
      * Die eingegebenen Daten werden auf Validität überprüft und danach in die Datenbank gespeichert.
@@ -91,7 +89,7 @@ public class PatientHinzufügen {
         panel.add(addressField);
         panel.add(phoneLabel);
         panel.add(phoneField);
-        panel.add(new JLabel()); // Platzhalter
+        panel.add(new JLabel());
         panel.add(submitButton);
         panel.add(exitButton);
 
@@ -107,8 +105,8 @@ public class PatientHinzufügen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String idText = idField.getText(); // Eingabe als String speichern
-                if (idText.isEmpty()) { // Überprüfen, ob die ID leer ist
+                String idText = idField.getText();
+                if (idText.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine ID ein.");
                     return;
                 }
@@ -125,21 +123,25 @@ public class PatientHinzufügen {
                 String Adresse = addressField.getText();
                 String Telefonnummer = phoneField.getText();
 
-
+                //Id überprüfen
                 if(String.valueOf(id).length() >5){
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige ID ein (bis zu 5 Zahlen).", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
+                //Vorname überprüfen
                 if (Vorname.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Vorname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Nachname überprüfen
                 if (Nachname.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Nachname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
+                //Alter überprüfen
                 try {
                     Alter = Integer.parseInt(ageField.getText());
                     if (Alter <= 0 || Alter > 120) {
@@ -150,29 +152,38 @@ public class PatientHinzufügen {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Alter ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Geschlecht überprüfen
                 if (!Geschlecht.equalsIgnoreCase("männlich") && !Geschlecht.equalsIgnoreCase("weiblich") && !Geschlecht.equalsIgnoreCase("divers")) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geschlecht ein (männlich, weiblich, divers).", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //SVN überprüfen
                 if (SvnNummer.isEmpty() || !SvnNummer.matches("\\d{10}")) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Sozialversicherungsnummer ein (10 Ziffern).", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Geburtsdatum überprüfen
                 try {
                     LocalDate.parse(Geburtsdatum);
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'yyyy-mm-dd' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Adresse überprüfen
                 if (Adresse.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Adresse' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                //Telefonnummer überprüfen
                 if (!Telefonnummer.matches("\\+?\\d+")) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 if(Telefonnummer.length()>13){
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein(Bis zu 13 Zahlen).", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -184,7 +195,7 @@ public class PatientHinzufügen {
                 String sqlSvnCheck = "SELECT COUNT(*) FROM patients WHERE `SVN Nummer` = ?";
 
                 try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                    // ID-Prüfung
+                    // Überprüfung ob ID schon exestiert
                     try (PreparedStatement pstmt = conn.prepareStatement(sqlIdCheck)) {
                         pstmt.setInt(1, id);
                         try (ResultSet rs = pstmt.executeQuery()) {
@@ -195,7 +206,7 @@ public class PatientHinzufügen {
                         }
                     }
 
-                    // Telefonnummer-Prüfung
+                    // Überprüfung ob Telefonnummer schon exestiert
                     try (PreparedStatement pstmt = conn.prepareStatement(sqlPhoneCheck)) {
                         pstmt.setString(1, Telefonnummer);
                         try (ResultSet rs = pstmt.executeQuery()) {
@@ -206,7 +217,7 @@ public class PatientHinzufügen {
                         }
                     }
 
-                    // SVN-Prüfung
+                    // Überprüfung ob SVN Nummer schon exestiert
                     try (PreparedStatement pstmt = conn.prepareStatement(sqlSvnCheck)) {
                         pstmt.setString(1, SvnNummer);
                         try (ResultSet rs = pstmt.executeQuery()) {

@@ -10,7 +10,7 @@ import java.util.Vector;
 
 
 /**
- * Die Klasse {PatientenSuchen} stellt eine grafische Benutzeroberfläche (GUI) bereit,
+ * Die Klasse PatientenSuchen stellt eine grafische Benutzeroberfläche (GUI) bereit,
  * die es ermöglicht, Patientendaten basierend auf einem Suchtext zu durchsuchen und anzuzeigen.
  * <p>
  * Die Klasse verwendet JDBC zur Verbindung mit einer MySQL-Datenbank und Swing zur Implementierung der GUI.
@@ -20,7 +20,9 @@ public class PatientenSuchen {
 
     /**
      * Die URL der MySQL-Datenbank.
+     * <p>
      * Der Benutzername für die Verbindung zur MySQL-Datenbank.
+     * <p>
      * Das Passwort für die Verbindung zur MySQL-Datenbank.
      */
     public static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
@@ -31,8 +33,9 @@ public class PatientenSuchen {
      * Zeigt eine GUI an, die es ermöglicht, Patienten basierend auf einer RegEx-Suche anzuzeigen.
      * <p>
      * Diese Methode erstellt ein JFrame mit einem Suchfeld, einer Tabelle zur Anzeige der Patientendaten
-     * und Buttons zur Interaktion. Patientendaten können mithilfe eines Suchtextes dynamisch gefiltert werden.
-     * </p>
+     * und Buttons zur Interaktion.
+     * <p>
+     * Patientendaten können mithilfe eines Suchtextes dynamisch gefiltert werden.
      */
     public static void patientDatenAnzeigenMitSuche() {
 
@@ -117,10 +120,6 @@ public class PatientenSuchen {
      * <p>
      * Wenn der Suchtext leer ist, werden alle Patienten geladen. Die Methode stellt sicher, dass
      * die Ergebnisse in der Tabelle angezeigt werden.
-     * </p>
-     *
-     * @param tableModel Das Tabellenmodell, in das die Patientendaten eingefügt werden.
-     * @param searchText Der Suchtext für die Filterung (RegEx).
      */
     private static void ladePatientenAusDatenbank(DefaultTableModel tableModel, String searchText) {
         // Tabelle leeren

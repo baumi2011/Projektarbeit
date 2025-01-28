@@ -33,7 +33,9 @@ public class Login extends JFrame {
      * <p>
      * Dieser Konstruktor initialisiert das Login-Fenster, macht es sichtbar und
      * ruft die Methode {@link #LoginFunktion()} auf, um die Funktionalität des
-     * Login-Buttons zu aktivieren. Außerdem werden Beispiel-Benutzernamen und
+     * Login-Buttons zu aktivieren.
+     * <p>
+     * Außerdem werden Beispiel-Benutzernamen und
      * zugehörige Passwörter in einer HashMap gespeichert, um die Benutzeranmeldung
      * zu simulieren.
      * <p>
@@ -47,7 +49,6 @@ public class Login extends JFrame {
         benutzerMap.put("root", "1234");
         benutzerMap.put("Julian", "Baumgartner");
         benutzerMap.put("Jan", "Hesch");
-        benutzerMap.put("Sumit", "Zaudtke");
 
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

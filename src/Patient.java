@@ -4,9 +4,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.List;
 import java.util.Vector;
 
+/**
+ * Die Klasse {@code Patient} stellt das Hauptfenster einer Patientendatenbank-Anwendung dar.
+ * Sie ermöglicht die Verwaltung von Patientendaten, einschließlich Hinzufügen, Bearbeiten, Löschen und Suchen.
+ * Die Klasse verwendet eine grafische Benutzeroberfläche basierend auf {@link JFrame} und Swing-Komponenten.
+ * <p>
+ * Funktionen der Klasse:
+ *     <li>Anzeigen von Patientendaten aus einer MySQL-Datenbank in einer Tabelle</li>
+ *     <li>Hinzufügen, Bearbeiten, Löschen und Suchen von Patientendaten über Menüs</li>
+ *     <li>Aktualisieren der Datenanzeige durch Benutzerinteraktion</li>
+ */
 public class Patient extends JFrame {
     private PatientHinzufügen patientHinzufügen;
     private PatientBearbeitung patientBearbeitung;
@@ -16,7 +25,9 @@ public class Patient extends JFrame {
 
     /**
      * Konstruktor für die Patient-Klasse.
+     * <p>
      * Initialisiert das Hauptfenster der Anwendung, setzt den Titel und fügt die Menüleiste hinzu.
+     * <p>
      * Die Patientendaten werden sofort unter der Menüleiste angezeigt.
      */
     Patient() {
@@ -144,19 +155,19 @@ public class Patient extends JFrame {
         JMenuItem exitItem = new JMenuItem("Exit");
         menu.add(exitItem);
 
-        // "Hinzufügen" an der Hauptmenüleiste hinzufügen
+        // "Hinzufügen" an der Menüleiste hinzufügen
         JMenuItem hinzufügenButtonItem = new JMenuItem("Hinzufügen");
         menubar.add(hinzufügenButtonItem);
 
-        // Bearbeiten an der Menüleiste hinzufügen
+        // "Bearbeiten" an der Menüleiste hinzufügen
         JMenuItem bearbeitenButtonItem = new JMenuItem("Bearbeiten");
         menubar.add(bearbeitenButtonItem);
 
-        // Löschen an der Menüleiste hinzufügen
+        // "Löschen" an der Menüleiste hinzufügen
         JMenuItem löschenButtonItem = new JMenuItem("Löschen");
         menubar.add(löschenButtonItem);
 
-        // PatientenSuchen an der Menüleiste hinzufügen
+        // "PatientenSuchen" an der Menüleiste hinzufügen
         JMenuItem PatientSuchenButtonItem = new JMenuItem("PatientSuchen");
         menubar.add(PatientSuchenButtonItem);
 
@@ -184,7 +195,7 @@ public class Patient extends JFrame {
             }
         });
 
-        // Patientsuchen hinzufügen
+        // Patientsuchen hinzufügen mit Aufruf der GUI und der Methode zum Anzeigen der Patienten
         PatientSuchenButtonItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 patientenSuchen = new PatientenSuchen();

@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -6,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Vector;
+
 
 
 
@@ -110,7 +110,7 @@ public class PatientenSuchen {
 
             String sql = "SELECT `ID Patient`, `Vorname`, `Nachname`, `Geburtsdatum`, `Adresse`, `SVN Nummer` " +
                     "FROM patients " +
-                    "WHERE `Vorname` LIKE ? OR `Nachname` LIKE ? OR `Geburtsdatum` LIKE ? OR `Adresse` LIKE ? OR `SVN Nummer` LIKE ?";
+                    "WHERE `ID Patient` LIKE ? OR `Vorname` LIKE ? OR `Nachname` LIKE ? OR `Geburtsdatum` LIKE ? OR `Adresse` LIKE ? OR `SVN Nummer` LIKE ?";
 
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -121,6 +121,7 @@ public class PatientenSuchen {
                 pstmt.setString(3, query);
                 pstmt.setString(4, query);
                 pstmt.setString(5, query);
+                pstmt.setString(6, query);
 
                 ResultSet rs = pstmt.executeQuery();
 

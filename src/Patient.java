@@ -4,10 +4,12 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class Patient extends JFrame {
-    private PatientDatabase patientDatabase;
+    private PatientHinzufügen patientHinzufügen;
     private PatientBearbeitung patientBearbeitung;
     private PatientLöschen patientLöschen;
     private PatientdatenAnzeigen patientdatenAnzeigen;
+    private PatientenSuchen patientenSuchen;
+    private Patient patient;
 
     private int IDPatient;
     private int SVNNummer;
@@ -53,7 +55,7 @@ public class Patient extends JFrame {
         JMenuItem exitItem = new JMenuItem("Exit");
         menu.add(exitItem);
 
-        // Hinzufügen an der Hauptmenüleiste mit Exportieren usw.
+        // "Hinzufügen" an der Hauptmenüleiste hinzufügen
         JMenuItem hinzufügenButtonItem = new JMenuItem("Hinzufügen");
         menubar.add(hinzufügenButtonItem);
 
@@ -68,6 +70,10 @@ public class Patient extends JFrame {
         // PatientendatenAnzeigen an der Menüleiste hinzufügen
         JMenuItem PatientendatenAnzeigenButtonItem = new JMenuItem("PatientendatenAnzeigen");
         menubar.add(PatientendatenAnzeigenButtonItem);
+
+        // PatientenSuchen an der Menüleiste hinzufügen
+        JMenuItem PatientSuchenButtonItem = new JMenuItem("PatientSuchen");
+        menubar.add(PatientSuchenButtonItem);
 
         // LöschenButton Listener hinzufügen mit Aufruf der GUI und der Methoden zum Löschen
         löschenButtonItem.addActionListener(new ActionListener() {
@@ -88,8 +94,8 @@ public class Patient extends JFrame {
         // HinzufügenButton hinzufügen mit Aufruf der GUI und der Methoden zum Hinzufügen eines neuen Patienten
         hinzufügenButtonItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                patientDatabase = new PatientDatabase();
-                PatientDatabase.patientenDaten();
+                patientHinzufügen = new PatientHinzufügen();
+                PatientHinzufügen.patientenDaten();
             }
         });
 
@@ -98,6 +104,14 @@ public class Patient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 patientdatenAnzeigen = new PatientdatenAnzeigen();
                 PatientdatenAnzeigen.patientDatenAnzeigen();
+            }
+        });
+
+        //Patientsuchen hinzufügen
+        PatientSuchenButtonItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+             patientenSuchen = new PatientenSuchen();
+             PatientenSuchen.patientDatenAnzeigenMitSuche();
             }
         });
 

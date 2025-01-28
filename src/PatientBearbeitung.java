@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -112,6 +114,7 @@ public class PatientBearbeitung {
                             gebField.setText(rs.getString("Geburtsdatum"));
                             addressField.setText(rs.getString("Adresse"));
                             phoneField.setText(rs.getString("Telefonnummer"));
+                            idField.setEditable(false); // ID nicht mehr änderbar nach Suche
                         } else {
                             JOptionPane.showMessageDialog(frame, "Kein Patient mit dieser ID gefunden.", "Fehler", JOptionPane.ERROR_MESSAGE);
                         }
@@ -140,7 +143,7 @@ public class PatientBearbeitung {
                     return;
                 }
 
-                // Daten aus den Feldern abrufen
+                // Die ID darf nicht verändert werden
                 String vorname = nameField.getText();
                 String nachname = nachnameField.getText();
                 String alterStr = ageField.getText();
@@ -150,11 +153,89 @@ public class PatientBearbeitung {
                 String adresse = addressField.getText();
                 String telefonnummer = phoneField.getText();
 
+                // Eingabeüberprüfungen
+                if (vorname.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Das Feld 'Vorname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (nachname.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Das Feld 'Nachname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Alter überprüfen
+                if (alterStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Das Feld 'Alter' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                try {
+                    int alter = Integer.parseInt(alterStr);
+                    if (alter < 0 || alter > 120) {
+                        JOptionPane.showMessageDialog(frame, "Das Alter muss eine Zahl zwischen 0 und 120 sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Das Alter muss eine gültige Zahl sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Geschlecht überprüfen
+                if (!geschlecht.equalsIgnoreCase("männlich") && !geschlecht.equalsIgnoreCase("weiblich") && !geschlecht.equalsIgnoreCase("divers")) {
+                    JOptionPane.showMessageDialog(frame, "Das Geschlecht muss 'männlich', 'weiblich' oder 'divers' sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Geburtsdatum überprüfen
+                try {
+                    LocalDate.parse(geburtsdatum);
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'yyyy-mm-dd' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Telefonnummer überprüfen
+                if (phoneField.getText().isEmpty()|| phoneField.getText().length() > 13 || phoneField.getText().length() <3) {
+                    JOptionPane.showMessageDialog(frame, "Die Telefonnummer muss zwischen 0 und 13 Ziffern enthalten.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // SVN-Nummer überprüfen
+                if (!svnField.getText().matches("\\d{10}")) {
+                    JOptionPane.showMessageDialog(frame, "Die SVN Nummer muss genau 10 Ziffern enthalten.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (addressField.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(frame, "Das Feld 'Adresse' darf nicht leer sein." , "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 try {
                     int alter = Integer.parseInt(alterStr);
 
-                    // SQL-Update durchführen
+                    // Überprüfung, ob SVN oder Telefonnummer bereits existiert
                     try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+                        String checkSQL = "SELECT * FROM patients WHERE (`SVN Nummer` = ? OR Telefonnummer = ?) AND `ID Patient` != ?";
+                        try (PreparedStatement pstmt = conn.prepareStatement(checkSQL)) {
+                            pstmt.setString(1, svnNummer);
+                            pstmt.setString(2, telefonnummer);
+                            pstmt.setInt(3, id);
+
+                            ResultSet rs = pstmt.executeQuery();
+                            if (rs.next()) {
+                                if (rs.getString("SVN Nummer").equals(svnNummer)) {
+                                    JOptionPane.showMessageDialog(frame, "Diese SVN-Nummer existiert bereits.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                                if (rs.getString("Telefonnummer").equals(telefonnummer)) {
+                                    JOptionPane.showMessageDialog(frame, "Diese Telefonnummer existiert bereits.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                            }
+                        }
+
+                        // SQL-Update durchführen
                         String sql = "UPDATE patients SET Vorname = ?, Nachname = ?, `Alter` = ?, Geschlecht = ?, `SVN Nummer` = ?, Geburtsdatum = ?, Adresse = ?, Telefonnummer = ? WHERE `ID Patient` = ?";
                         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                             pstmt.setString(1, vorname);
@@ -166,25 +247,20 @@ public class PatientBearbeitung {
                             pstmt.setString(7, adresse);
                             pstmt.setString(8, telefonnummer);
                             pstmt.setInt(9, id);
-
-                            int rowsUpdated = pstmt.executeUpdate();
-                            if (rowsUpdated > 0) {
-                                JOptionPane.showMessageDialog(frame, "Patientendaten erfolgreich aktualisiert.", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
-                            } else {
-                                JOptionPane.showMessageDialog(frame, "Fehler: Kein Patient mit dieser ID gefunden.", "Fehler", JOptionPane.ERROR_MESSAGE);
-                            }
+                            pstmt.executeUpdate();
+                            JOptionPane.showMessageDialog(frame, "Patientendaten wurden erfolgreich aktualisiert.", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
                         }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(frame, "Fehler beim Überprüfen der Daten: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Alter ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(frame, "Fehler beim Aktualisieren der Daten: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Das Alter muss eine Zahl sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        frame.add(panel);
+        // Fenster anzeigen
+        frame.getContentPane().add(panel);
         frame.setVisible(true);
     }
 }
-

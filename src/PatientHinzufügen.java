@@ -1,13 +1,9 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 
@@ -17,7 +13,7 @@ import java.time.format.DateTimeParseException;
  * Sie enthält Methoden zur Darstellung einer grafischen Oberfläche, zur Validierung der Benutzereingaben
  * sowie zum Einfügen der Patientendaten in die Datenbank.
  */
-public class PatientDatabase {
+public class PatientHinzufügen {
 
 
     // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
@@ -110,6 +106,15 @@ public class PatientDatabase {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String idText = idField.getText(); // Eingabe als String speichern
+                if (idText.isEmpty()) { // Überprüfen, ob die ID leer ist
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine ID ein.");
+                    return;
+                }
+
+
+
                 int id = Integer.parseInt(idField.getText());
                 String Vorname = nameField.getText();
                 String Nachname = nachnameField.getText();
@@ -121,6 +126,10 @@ public class PatientDatabase {
                 String Telefonnummer = phoneField.getText();
 
 
+                if(String.valueOf(id).length() >5){
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige ID ein (bis zu 5 Zahlen).", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 if (Vorname.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Das Feld 'Vorname' darf nicht leer sein.", "Fehler", JOptionPane.ERROR_MESSAGE);
@@ -152,7 +161,7 @@ public class PatientDatabase {
                 try {
                     LocalDate.parse(Geburtsdatum);
                 } catch (DateTimeParseException ex) {
-                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'yy-mm-dd' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie ein gültiges Geburtsdatum im Format 'yyyy-mm-dd' ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (Adresse.isEmpty()) {
@@ -161,6 +170,54 @@ public class PatientDatabase {
                 }
                 if (!Telefonnummer.matches("\\+?\\d+")) {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if(Telefonnummer.length()>13){
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein(Bis zu 13 Zahlen).", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Überprüfung, ob ID, Telefonnummer oder SVN-Nummer bereits existieren
+                String sqlIdCheck = "SELECT COUNT(*) FROM patients WHERE `ID Patient` = ?";
+                String sqlPhoneCheck = "SELECT COUNT(*) FROM patients WHERE Telefonnummer = ?";
+                String sqlSvnCheck = "SELECT COUNT(*) FROM patients WHERE `SVN Nummer` = ?";
+
+                try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+                    // ID-Prüfung
+                    try (PreparedStatement pstmt = conn.prepareStatement(sqlIdCheck)) {
+                        pstmt.setInt(1, id);
+                        try (ResultSet rs = pstmt.executeQuery()) {
+                            if (rs.next() && rs.getInt(1) > 0) {
+                                JOptionPane.showMessageDialog(frame, "Diese ID wird bereits verwendet. Bitte wählen Sie eine andere.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        }
+                    }
+
+                    // Telefonnummer-Prüfung
+                    try (PreparedStatement pstmt = conn.prepareStatement(sqlPhoneCheck)) {
+                        pstmt.setString(1, Telefonnummer);
+                        try (ResultSet rs = pstmt.executeQuery()) {
+                            if (rs.next() && rs.getInt(1) > 0) {
+                                JOptionPane.showMessageDialog(frame, "Diese Telefonnummer wird bereits verwendet. Bitte wählen Sie eine andere.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        }
+                    }
+
+                    // SVN-Prüfung
+                    try (PreparedStatement pstmt = conn.prepareStatement(sqlSvnCheck)) {
+                        pstmt.setString(1, SvnNummer);
+                        try (ResultSet rs = pstmt.executeQuery()) {
+                            if (rs.next() && rs.getInt(1) > 0) {
+                                JOptionPane.showMessageDialog(frame, "Diese SVN-Nummer wird bereits verwendet. Bitte wählen Sie eine andere.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frame, "Fehler beim Überprüfen der Datenbank: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -232,5 +289,3 @@ public class PatientDatabase {
 
 
 }
-
-

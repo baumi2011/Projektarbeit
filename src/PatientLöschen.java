@@ -18,7 +18,6 @@ import java.sql.SQLException;
 public class PatientLöschen {
 
 
-
         // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
         public static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
         public static final String DB_USER = "root";

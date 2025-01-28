@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Vector;
 
+/**
+ * Die Klasse PatientdatenAnzeigen implementiert eine GUI-Anwendung zum Anzeigen aller Patienten die bereits in der Datenbank gespeichert sind.
+ */
+
 public class PatientdatenAnzeigen {
 
     // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
@@ -14,8 +18,12 @@ public class PatientdatenAnzeigen {
     public static final String DB_PASSWORD = "Jan_hesch501";
 
     /**
-     * Zeigt eine GUI an, die alle Patienten aus der Datenbank lädt und anzeigt.
-     * Ermöglicht dem Benutzer, einen Patienten auszuwählen.
+     * Zeigt eine grafische Benutzeroberfläche (GUI) an, die alle Patienten aus der Datenbank lädt und in einer Tabelle darstellt.
+     * <p>
+     * Der Benutzer kann die Daten der Patienten einsehen, aber nicht bearbeiten.
+     *<p>
+     * Die Patientendaten werden aus der Datenbank abgerufen und in einer Tabelle angezeigt. Die Spalten umfassen die ID, den Vor- und Nachnamen,
+     * das Geburtsdatum, die Adresse und die SVN Nummer der Patienten.
      */
     public static void patientDatenAnzeigen() {
         // Fenster erstellen
@@ -32,19 +40,18 @@ public class PatientdatenAnzeigen {
         table.setModel(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Spalten für die Tabelle definieren (SVN Nummer hinzugefügt)
         tableModel.addColumn("ID");
         tableModel.addColumn("Vorname");
         tableModel.addColumn("Nachname");
         tableModel.addColumn("Geburtsdatum");
         tableModel.addColumn("Adresse");
-        tableModel.addColumn("SVN Nummer");  // Neue Spalte für SVN Nummer
+        tableModel.addColumn("SVN Nummer");
 
         // Patienten aus der Datenbank laden
         ladePatientenAusDatenbank(tableModel);
 
         // Die Zellen der Tabelle nicht editierbar machen
-        table.setDefaultEditor(Object.class, null); // Setzt den Editor für alle Zellen auf null (nicht editierbar)
+        table.setDefaultEditor(Object.class, null);
 
         // Buttons erstellen
         JButton exitButton = new JButton("Abbrechen");
@@ -73,11 +80,14 @@ public class PatientdatenAnzeigen {
     }
 
     /**
-     * Lädt alle Patienten aus der Tabelle `patients` und fügt sie in das Tabellenmodell ein.
+     * Lädt alle Patienten aus der Tabelle `patients` in der MySQL-Datenbank und fügt sie in das angegebene Tabellenmodell ein.
+     * <p>
+     * Diese Methode führt eine SQL-Abfrage aus, um alle relevanten Patientendaten (ID, Vorname, Nachname, Geburtsdatum, Adresse, SVN Nummer)
+     * aus der Datenbank abzufragen und die erhaltenen Daten in einer Tabelle darzustellen.
      *
-     * @param tableModel Das Tabellenmodell, in das die Patientendaten eingefügt werden.
      */
     private static void ladePatientenAusDatenbank(DefaultTableModel tableModel) {
+        // SQL-Abfrage, um alle relevanten Patientendaten abzurufen
         String sql = "SELECT `ID Patient`, `Vorname`, `Nachname`, `Geburtsdatum`, `Adresse`, `SVN Nummer` FROM patients";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -97,6 +107,7 @@ public class PatientdatenAnzeigen {
             }
 
         } catch (SQLException e) {
+            // Fehlerbehandlung bei der Datenbankabfrage
             JOptionPane.showMessageDialog(null, "Fehler beim Laden der Patientendaten: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
         }
     }

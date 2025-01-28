@@ -50,8 +50,12 @@ public class Patient extends JFrame {
         tableModel.addColumn("Vorname");
         tableModel.addColumn("Nachname");
         tableModel.addColumn("Geburtsdatum");
+        tableModel.addColumn("Geschlecht");
+        tableModel.addColumn("Alter");
+        tableModel.addColumn("Telefonnummer");
         tableModel.addColumn("Adresse");
         tableModel.addColumn("SVN Nummer");
+
 
         // Patienten aus der Datenbank laden
         ladePatientenAusDatenbank(tableModel);
@@ -87,7 +91,8 @@ public class Patient extends JFrame {
      */
     private static void ladePatientenAusDatenbank(DefaultTableModel tableModel) {
         // SQL-Abfrage, um alle relevanten Patientendaten abzurufen
-        String sql = "SELECT `ID Patient`, `Vorname`, `Nachname`, `Geburtsdatum`, `Adresse`, `SVN Nummer` FROM patients";
+        String sql = "SELECT `ID Patient`, `Vorname`, `Nachname`, `Geburtsdatum`, `Geschlecht`, `Alter`, `Telefonnummer`, `Adresse`, `SVN Nummer` FROM patients";
+
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projektarbeit", "root", "Jan_hesch501");
              Statement stmt = conn.createStatement();
@@ -100,8 +105,15 @@ public class Patient extends JFrame {
                 row.add(rs.getString("Vorname"));
                 row.add(rs.getString("Nachname"));
                 row.add(rs.getDate("Geburtsdatum"));
+                row.add(rs.getString("Geschlecht"));
+                row.add(rs.getString("Alter"));
+                row.add(rs.getString("Telefonnummer"));
                 row.add(rs.getString("Adresse"));
                 row.add(rs.getString("SVN Nummer"));
+
+
+
+
                 tableModel.addRow(row);
             }
 

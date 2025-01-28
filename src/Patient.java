@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class Patient extends JFrame {
-    private PatientDatabase patientDatabase;
+    private PatientHinzufügen patientHinzufügen;
     private PatientBearbeitung patientBearbeitung;
     private PatientLöschen patientLöschen;
     private PatientdatenAnzeigen patientdatenAnzeigen;
@@ -88,8 +88,8 @@ public class Patient extends JFrame {
         // HinzufügenButton hinzufügen mit Aufruf der GUI und der Methoden zum Hinzufügen eines neuen Patienten
         hinzufügenButtonItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                patientDatabase = new PatientDatabase();
-                PatientDatabase.patientenDaten();
+                patientHinzufügen = new PatientHinzufügen();
+                PatientHinzufügen.patientenDaten();
             }
         });
 

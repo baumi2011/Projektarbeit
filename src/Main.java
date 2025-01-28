@@ -14,7 +14,7 @@ public class Main {
      * <p>
      * Diese Methode dient als Einstiegspunkt der Anwendung.
      * <p>
-     * Sie erstellt eine neue Instanz der {@link Login}-Klasse, wodurch das Login-Fenster angezeigt wird.
+     * Sie erstellt eine neue Instanz der {Login}-Klasse, wodurch das Login-Fenster angezeigt wird.
      */
     public static void main(String[] args) {
 

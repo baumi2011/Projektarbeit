@@ -17,7 +17,6 @@ import java.sql.SQLException;
  */
 public class PatientLöschen {
 
-
         // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
         public static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
         public static final String DB_USER = "root";
@@ -30,6 +29,7 @@ public class PatientLöschen {
      * Es wird überprüft, ob die ID gültig ist, und die Methode {@link #löschePatientMitId(int)} wird aufgerufen, um die Löschung durchzuführen.
      */
     public static void patientLöschen() {
+
             // Erstellen des Fensters
             JFrame frame = new JFrame("Patient löschen");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -39,7 +39,7 @@ public class PatientLöschen {
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(3, 1));
 
-            // GUI-Komponenten erstellen
+            // GUI-Komponenten
             JLabel idLabel = new JLabel("ID des Patienten eingeben:");
             JTextField idField = new JTextField(10);
             JButton deleteButton = new JButton("Löschen");
@@ -51,7 +51,7 @@ public class PatientLöschen {
             panel.add(deleteButton);
             panel.add(exitButton);
 
-            // Button-ActionListener für "Abbrechen"
+            // Button ActionListener für "Abbrechen"
             exitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -59,13 +59,13 @@ public class PatientLöschen {
                 }
             });
 
-            // Button-ActionListener für "Löschen"
+            // Button ActionListener für "Löschen"
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String idText = idField.getText();
 
-                    // Überprüfen, ob die ID eingegeben wurde
+
                     if (idText.isEmpty()) {
                         JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige ID ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -98,7 +98,6 @@ public class PatientLöschen {
             frame.setVisible(true);
         }
 
-        // Methode zum Löschen eines Patienten aus der Datenbank
 
     /**
      * Löscht einen Patienten aus der Datenbank basierend auf der angegebenen ID.
@@ -111,18 +110,20 @@ public class PatientLöschen {
         public static boolean löschePatientMitId(int id) {
             String sql = "DELETE FROM patients WHERE `ID Patient` = ?";
 
+            //Connection aufbauen
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-                // ID in den PreparedStatement einfügen
+                // ID einfügen
                 pstmt.setInt(1, id);
 
-                // SQL-Abfrage ausführen
+                // SQL Abfrage ausführen
                 int rowsDeleted = pstmt.executeUpdate();
 
                 // Prüfen, ob ein Datensatz gelöscht wurde
                 return rowsDeleted > 0;
 
+                // Exception werfen, falls die Daten nicht gelöscht werden konnten
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Daten konnten nicht gelöscht werden. Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
                 return false;

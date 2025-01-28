@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
  */
 public class PatientBearbeitung {
 
-    // JDBC-Verbindungsdetails
+    // JDBC URL, Benutzername und Passwort für die MySQL-Datenbank
     public static final String DB_URL = "jdbc:mysql://localhost:3306/projektarbeit";
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "Jan_hesch501";
@@ -34,12 +34,13 @@ public class PatientBearbeitung {
      * Die GUI überprüft die Eingaben auf Fehler und zeigt entsprechende Fehlermeldungen an.
      */
     public static void patientenBearbeitenGUI() {
+
         // Erstellen des Hauptfensters
         JFrame frame = new JFrame("Patientendaten bearbeiten");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 500);
 
-        // Layout und Komponenten
+        // Layout und Komponenten festlegen/erstellen
         JPanel panel = new JPanel(new GridLayout(11, 2, 11, 11));
 
         JTextField idField = new JTextField();
@@ -79,7 +80,7 @@ public class PatientBearbeitung {
         panel.add(updateButton);
         panel.add(exitButton);
 
-        // ActionListener für den "Suchen"-Button
+        // Button ActionListener für "Suchen"
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,7 @@ public class PatientBearbeitung {
                         ResultSet rs = pstmt.executeQuery();
 
                         if (rs.next()) {
+
                             // Felder mit den Patientendaten füllen
                             nameField.setText(rs.getString("Vorname"));
                             nachnameField.setText(rs.getString("Nachname"));
@@ -124,14 +126,14 @@ public class PatientBearbeitung {
                 }
             }
         });
-
+        // Button ActionListener für "Exit"
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
             }
         });
 
-        // ActionListener für den "Aktualisieren"-Button
+        // Button ActionListener für "Aktualisieren"
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

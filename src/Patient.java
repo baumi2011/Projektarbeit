@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.List;
 import java.util.Vector;
 
 public class Patient extends JFrame {
@@ -176,6 +177,8 @@ public class Patient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 patientenSuchen = new PatientenSuchen();
                 PatientenSuchen.patientDatenAnzeigenMitSuche();
+
+
             }
         });
 

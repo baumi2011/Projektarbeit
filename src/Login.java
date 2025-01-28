@@ -47,6 +47,7 @@ public class Login extends JFrame {
         benutzerMap.put("root", "1234");
         benutzerMap.put("Julian", "Baumgartner");
         benutzerMap.put("Jan", "Hesch");
+        benutzerMap.put("Sumit", "Zaudtke");
 
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

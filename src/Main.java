@@ -1,8 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-import java.net.URL;
-import java.sql.*;
-import java.util.Scanner;
 
 /**
  * Die Hauptklasse der Anwendung, die den Einstiegspunkt für die Ausführung bereitstellt.

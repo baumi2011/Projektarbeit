@@ -184,8 +184,8 @@ public class PatientHinzufügen {
                     JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if(Telefonnummer.length()>13){
-                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein(Bis zu 13 Zahlen).", "Fehler", JOptionPane.ERROR_MESSAGE);
+                if(Telefonnummer.length()>13 || Telefonnummer.length()<3){
+                    JOptionPane.showMessageDialog(frame, "Bitte geben Sie eine gültige Telefonnummer ein (Zwischen 3 und 13 Ziffern).", "Fehler", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
